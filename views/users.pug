@@ -1,0 +1,10 @@
+extends layout
+block content
+    h1 Users
+    p This is list of all users
+    table
+        for user in users
+            tr
+                td
+                    a(href='/user/' + user.id) #{user.name}
+                td= user.email
