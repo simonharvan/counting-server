@@ -1,0 +1,20 @@
+extends layouts/layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.offset-md-3
+        h1 Counting people in public transport
+        h2 Smart cities
+        p This portal for my diploma thesis. My name is Simon Harvan and I am studying at FIIT STU (<a href="https://www.fiit.stuba.sk">fiit.stuba.sk</a>).
+        p We are working on embedded system for counting people in public transport and this is website, where we visualize and store data.
+        hr
+        // register form
+        form(method='POST' action='/auth/login')
+          div.form-group
+            label(for='email') Email:
+            input#email.form-control(type='email', placeholder='name@email.com' name='email')
+          div.form-group
+            label(for='pw') Password:
+            input#pw.form-control(type='password' name='password')
+          button.btn.btn-primary(type='submit') Login

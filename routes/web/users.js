@@ -6,7 +6,7 @@ var models  = require(__root + 'models');
 router.get('/', function (req, res, next) {
 
     models.Users.findAll().then(function (users) {
-        res.render('users', { 'users': users})
+        res.render('users', { 'name': 'users', 'users': users})
     });
 });
 

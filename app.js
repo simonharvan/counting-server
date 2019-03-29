@@ -3,14 +3,22 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
+var session = require('express-session');
 global.__root   = __dirname + '/';
 
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
-let testRouter = require('./routes/test');
-let authRouter = require('./routes/auth/auth');
-let recordRouter = require('./routes/records');
-let verify = require('./routes/auth/verify');
+let config = require('./config/config.json');
+
+
+let apiAuthRouter = require('./routes/api/auth/auth');
+let recordRouter = require('./routes/api/records');
+let verifyApi = require('./routes/api/auth/verify');
+
+let indexRouter = require('./routes/web/index');
+let authRouter = require('./routes/web/auth/auth');
+let usersRouter = require('./routes/web/users');
+let busesRouter = require('./routes/web/buses');
+let vehiclesRouter = require('./routes/web/vehicles');
+let verify = require('./routes/web/auth/verify');
 let scheduleNodeCheck = require('./cron/nodes-checker');
 scheduleNodeCheck();
 let app = express();
@@ -19,18 +27,34 @@ let app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(session({
+    key: 'user_sid',
+    secret: config.secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', verify, usersRouter);
 app.use('/auth', authRouter);
-app.use('/records', verify, recordRouter);
-app.use('/test', testRouter);
+app.use('/buses', verify, busesRouter);
+app.use('/users', verify, usersRouter);
+app.use('/vehicles', verify, vehiclesRouter);
+
+app.use('/api/auth', apiAuthRouter);
+
+app.use('/api/records', verifyApi, recordRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,7 +69,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('layouts/error');
 });
 
 module.exports = app;

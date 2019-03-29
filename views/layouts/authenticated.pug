@@ -1,0 +1,15 @@
+extends layout
+block content
+
+    .row.main.container
+        .col-md-3.col-xl-2.bd-sidebar
+            nav
+                ul.list-group
+                    li.list-group-item(class=(name === "buses" ? "active" : undefined))
+                        a(href="/") Home
+                    li.list-group-item(class=(name === "users" ? "active" : undefined))
+                        a(href="/users") Users
+                    li.list-group-item
+                        a(href="/auth/logout") Logout
+        .col-md-9
+            block content-auth

@@ -4,32 +4,37 @@ var router = express.Router();
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
 var config = require(__root + 'config/config'); // get config file
-var models  = require(__root + 'models');
+var models = require(__root + 'models');
 
 router.post('/login', function (req, res) {
 
-   models.Users.findOne({where: {email: req.body.email}}).then(function (user) {
-        if (!user) return res.status(404).send('No user found.');
+    models.Users.findOne({where: {email: req.body.email}}).then(function (user) {
+        if (!user)
+            return res.status(404).send('No user found.');
 
         // check if the password is valid
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-        if (!passwordIsValid) return res.status(401).send({auth: false, token: null});
-        console.log(user);
+        if (!passwordIsValid)
+            return res.status(401).send({auth: false, token: null});
         // if user is found and password is valid
         // create a token
-        var token = jwt.sign({id: user._id}, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
-        });
+        req.session.user = user;
         // return the information including token as JSON
-        res.status(200).send({auth: true, token: token});
+        res.redirect('/buses');
     }).catch(function (err) {
         res.status(500).json({error: err})
     });
-
 });
 
+
+
 router.get('/logout', function (req, res) {
-    res.status(200).send({auth: false, token: null});
+    if (req.session.user && req.cookies.user_sid) {
+        res.clearCookie('user_sid');
+        res.redirect('/');
+    } else {
+        res.redirect('/');
+    }
 });
 
 router.post('/register', function (req, res) {

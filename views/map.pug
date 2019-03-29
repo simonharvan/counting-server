@@ -1,0 +1,10 @@
+extends layouts/authenticated
+
+block head
+    script(src="/javascripts/map.js")
+block content-auth
+    .row
+        .col-md-12
+            h1 Map
+            div(id="map")
+            script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPHXa7y5lWhbHA8H1KTfI2sE7s9frLi_s&callback=initMap")

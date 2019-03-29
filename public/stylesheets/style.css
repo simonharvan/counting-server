@@ -1,8 +1,15 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body{
+  padding: 10px 0;
+}
+a {
+  color: inherit;
 }
 
-a {
-  color: #00B7FF;
+a:hover {
+  color: inherit;
+}
+
+#map {
+  height: calc(100vh - 10vh);
+  width: calc(80vw);
 }

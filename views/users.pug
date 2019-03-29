@@ -1,8 +1,8 @@
-extends layout
-block content
+extends layouts/authenticated
+block content-auth
     h1 Users
     p This is list of all users
-    table
+    table.table.table-striped
         for user in users
             tr
                 td
