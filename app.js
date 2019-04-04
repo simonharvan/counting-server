@@ -20,6 +20,7 @@ let authRouter = require('./routes/web/auth/auth');
 let usersRouter = require('./routes/web/users');
 let busesRouter = require('./routes/web/buses');
 let vehiclesRouter = require('./routes/web/vehicles');
+let logsRouter = require('./routes/api/logs');
 let verify = require('./routes/web/auth/verify');
 let scheduleNodeCheck = require('./cron/nodes-checker');
 scheduleNodeCheck();
@@ -61,6 +62,7 @@ app.use('/vehicles', verify, vehiclesRouter);
 app.use('/api/auth', apiAuthRouter);
 
 app.use('/api/records', verifyApi, recordRouter);
+app.use('/api/logs', verifyApi, logsRouter);
 
 
 
