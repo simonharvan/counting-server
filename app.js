@@ -3,7 +3,9 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-var session = require('express-session');
+let session = require('express-session');
+let SequelizeStore = require('connect-session-sequelize')(session.Store);
+var models = require('./models');
 global.__root   = __dirname + '/';
 
 let config = require('./config/config.json');
@@ -31,16 +33,22 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+let store = new SequelizeStore({
+    db: models.sequelize
+})
 app.use(session({
     key: 'user_sid',
     secret: config.secret,
-    resave: false,
     saveUninitialized: false,
     cookie: {
         expires: 600000
-    }
+    },
+    store: store,
+    resave: false, // we support the touch method so per the express-session docs this should be set to false
+    proxy: true
 }));
+
+store.sync();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
