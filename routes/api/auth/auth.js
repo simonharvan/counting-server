@@ -19,9 +19,9 @@ router.post('/login', function (req, res) {
         console.log(user);
         // if user is found and password is valid
         // create a token
-        var token = jwt.sign({id: user._id}, config.secret, {
-            expiresIn: 0 // expires in 24 hours
-        });
+        var token = jwt.sign({id: user._id}, config.secret,
+            // {expiresIn: 86400} // expires in 24 hours
+        );
         // return the information including token as JSON
         res.status(200).send({auth: true, token: token});
     }).catch(function (err) {
@@ -46,9 +46,10 @@ router.post('/register', function (req, res) {
 
         // if user is registered without errors
         // create a token
-        var token = jwt.sign({id: user._id}, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
-        });
+        var token = jwt.sign({id: user._id}, config.secret,
+            // {expiresIn: 86400 }// expires in 24 hours
+            // }
+        );
 
         res.status(200).send({auth: true, token: token});
     }).catch(function (err) {
