@@ -1,0 +1,10 @@
+extends layouts/authenticated
+block content-auth
+    h1 Logs
+    p This is list of all logs
+    table.table.table-striped
+        for log in logs
+            tr
+                td
+                    div#break-text= log.text
+                td= log.createdAt

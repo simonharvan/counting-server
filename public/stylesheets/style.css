@@ -13,3 +13,8 @@ a:hover {
   height: calc(100vh - 10vh);
   width: calc(80vw);
 }
+#break-text {
+  word-wrap: break-word;         /* All browsers since IE 5.5+ */
+  overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+  width: 70vw;
+}
