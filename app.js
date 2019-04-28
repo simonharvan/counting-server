@@ -14,6 +14,7 @@ let config = require('./config/config.json');
 let apiAuthRouter = require('./routes/api/auth/auth');
 let recordRouter = require('./routes/api/records');
 let verifyApi = require('./routes/api/auth/verify');
+let testApiRouter = require('./routes/api/test');
 
 let indexRouter = require('./routes/web/index');
 let authRouter = require('./routes/web/auth/auth');
@@ -61,8 +62,8 @@ app.use('/users', verify, usersRouter);
 app.use('/logs', verify, logsRouter);
 app.use('/vehicles', verify, vehiclesRouter);
 
+app.use('/api/test', testApiRouter);
 app.use('/api/auth', apiAuthRouter);
-
 app.use('/api/records', verifyApi, recordRouter);
 app.use('/api/logs', verifyApi, logsApiRouter);
 
