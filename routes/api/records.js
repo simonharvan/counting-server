@@ -52,8 +52,7 @@ router.post('/:vehicleId', function (req, res) {
 
     models.CountingNodes.update({
             state: "warn"
-        },
-        {
+        }, {
             where: {
                 [Op.and]: [
                     {
