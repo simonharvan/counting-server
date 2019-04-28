@@ -3,16 +3,7 @@ let router = express.Router();
 let models = require(__root + 'models');
 
 router.get('/', function (req, res, next) {
-    models.CountingNodes.findOne().then(function (node) {
-
-
-        res.render('test',
-            {
-                'testContent': node.getRecords()
-            });
-
-    });
-})
-;
+    res.status(200).send({status: "OK"});
+});
 
 module.exports = router;
