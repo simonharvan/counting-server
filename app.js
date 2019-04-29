@@ -20,6 +20,7 @@ let indexRouter = require('./routes/web/index');
 let authRouter = require('./routes/web/auth/auth');
 let usersRouter = require('./routes/web/users');
 let busesRouter = require('./routes/web/buses');
+let nodesRouter = require('./routes/web/nodes');
 let vehiclesRouter = require('./routes/web/vehicles');
 let logsRouter = require('./routes/web/logs');
 let logsApiRouter = require('./routes/api/logs');
@@ -38,7 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 let store = new SequelizeStore({
     db: models.sequelize
-})
+});
 app.use(session({
     key: 'user_sid',
     secret: config.secret,
@@ -61,6 +62,7 @@ app.use('/buses', verify, busesRouter);
 app.use('/users', verify, usersRouter);
 app.use('/logs', verify, logsRouter);
 app.use('/vehicles', verify, vehiclesRouter);
+app.use('/nodes', verify, nodesRouter);
 
 app.use('/api/test', testApiRouter);
 app.use('/api/auth', apiAuthRouter);

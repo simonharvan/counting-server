@@ -18,3 +18,9 @@ a:hover {
   overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
   width: 70vw;
 }
+.green {
+  color: green;
+}
+.red{
+  color: red;
+}

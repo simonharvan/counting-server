@@ -1,0 +1,14 @@
+extends layouts/authenticated
+block content-auth
+    h1 Nodes
+    p This is list of all nodes
+    table.table.table-striped
+        tr
+            th ID
+            th State
+            th Created at
+        for node in nodes
+            tr
+                td= node.id
+                td= node.state
+                td= node.createdAt
